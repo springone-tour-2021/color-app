@@ -1,5 +1,8 @@
 package org.springframework.demo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,40 +11,43 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class ColorController {
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(ColorController.class);
 	private ColorProperties colorProperties;
+	private Tracer tracer;
 
-	public ColorController(ColorProperties colorProperties) {
+	public ColorController(ColorProperties colorProperties, Tracer tracer) {
 		this.colorProperties = colorProperties;
+		this.tracer = tracer;
 	}
 
 	@GetMapping(path = {"/blueorgreen", "/"})
-	public Color color() throws InterruptedException {
+	public ColorResponse color() throws InterruptedException {
 		if (colorProperties.isSlow()) {
 			Thread.sleep(5000);
 		}
-		if (Color.BLUE.getId().equalsIgnoreCase(colorProperties.getColor())) {
-			return Color.BLUE;
-		} else if (Color.YELLOW.getId().equalsIgnoreCase(colorProperties.getColor())) {
-			return Color.YELLOW;
-		}
 
-		return Color.GREEN;
+		Color color = Color.valueOf(colorProperties.getColor());
+		tracer.currentSpan().tag("color", String.valueOf(color));
+		LOGGER.info("Picked color: {}", color);
+
+		return new ColorResponse(color);
 	}
 
-	static class Color {
-		public static final Color GREEN = new Color("green");
-		public static final Color BLUE = new Color("blue");
-		public static final Color YELLOW = new Color("yellow");
+	static class ColorResponse {
+		private Color id;
 
-		private String id;
+		ColorResponse() {}
 
-		Color(){}
+		public ColorResponse(Color id) { this.id = id; }
 
-		public Color(String id) { this.id = id; }
-
-		public String getId() {
-			return id;
+		public Color getId() {
+			return this.id;
 		}
+	}
+
+	enum Color {
+		green,
+		blue,
+		yellow;
 	}
 }

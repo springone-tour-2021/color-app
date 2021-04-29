@@ -20,7 +20,7 @@ public class GreenApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		ColorController.Color color = rest.getForObject("/", ColorController.Color.class);
-		assertEquals("green", color.getId());
+		ColorController.ColorResponse color = rest.getForObject("/", ColorController.ColorResponse.class);
+		assertEquals(ColorController.Color.green, color.getId());
 	}
 }

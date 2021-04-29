@@ -2,7 +2,6 @@ package org.springframework.demo;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -19,8 +18,8 @@ public class BlueApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		ColorController.Color color = rest.getForObject("/", ColorController.Color.class);
-		assertEquals("blue", color.getId());
+		ColorController.ColorResponse color = rest.getForObject("/", ColorController.ColorResponse.class);
+		assertEquals(ColorController.Color.blue, color.getId());
 	}
 
 }
