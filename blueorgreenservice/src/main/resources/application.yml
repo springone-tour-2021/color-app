@@ -1,7 +1,4 @@
-spring:
-  application.name: blueorgreen
-  config:
-    import: "optional:configserver:http://localhost:8888"
+spring.application.name: blueorgreen
 server.port: 7070
 
 ---

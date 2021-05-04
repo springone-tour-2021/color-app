@@ -1,15 +1,4 @@
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    leaseRenewalIntervalInSeconds: 10
-    metadataMap:
-      instanceId: ${spring.application.name}:${spring.application.instance_id:${server.port}}
-spring:
-  application.name: blueorgreenauthgateway
-  config:
-    import: "optional:configserver:http://localhost:8888"
+spring.application.name: blueorgreenauthgateway
 management:
   endpoints:
     web:
