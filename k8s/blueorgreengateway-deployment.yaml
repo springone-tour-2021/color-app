@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: blueorgreengateway
+  name: blueorgreengateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blueorgreengateway
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: blueorgreengateway
+    spec:
+      containers:
+      - image: blueorgreengateway:0.0.1-SNAPSHOT
+        name: blueorgreengateway
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "2000m"
+          requests:
+            memory: "512Mi"
+            cpu: "200m"
+        env:
+          - name: SERVER_PORT
+            value: '8080'
+status: {}

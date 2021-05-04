@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: blueorgreenfrontend
+  name: blueorgreenfrontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blueorgreenfrontend
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: blueorgreenfrontend
+    spec:
+      containers:
+      - image: blueorgreenfrontend:0.0.1-SNAPSHOT
+        name: blueorgreenfrontend
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "2000m"
+          requests:
+            memory: "512Mi"
+            cpu: "200m"
+        env:
+          - name: SERVER_PORT
+            value: '8080'
+          - name: SPRING_PROFILES_ACTIVE
+            value: local
+status: {}

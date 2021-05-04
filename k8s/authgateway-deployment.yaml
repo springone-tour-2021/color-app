@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: authgateway
+  name: authgateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authgateway
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: authgateway
+    spec:
+      containers:
+      - image: authgateway:0.0.1-SNAPSHOT
+        name: authgateway
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "2000m"
+          requests:
+            memory: "512Mi"
+            cpu: "200m"
+        env:
+          - name: SERVER_PORT
+            value: '8080'
+status: {}

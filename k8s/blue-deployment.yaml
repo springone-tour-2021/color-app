@@ -1,0 +1,151 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: blue
+    hint: nonpremium
+  name: blue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blueorgreen
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: blueorgreen
+        hint: nonpremium
+    spec:
+      containers:
+      - image: blueorgreen:0.0.1-SNAPSHOT
+        name: blueorgreen
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "2000m"
+          requests:
+            memory: "512Mi"
+            cpu: "200m"
+        env:
+          - name: SERVER_PORT
+            value: '8080'
+          - name: SPRING_PROFILES_ACTIVE
+            value: blue
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: green
+    hint: nonpremium
+  name: green
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blueorgreen
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: blueorgreen
+        hint: nonpremium
+    spec:
+      containers:
+      - image: blueorgreen:0.0.1-SNAPSHOT
+        name: blueorgreen
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "2000m"
+          requests:
+            memory: "512Mi"
+            cpu: "200m"
+        env:
+          - name: SERVER_PORT
+            value: '8080'
+          - name: SPRING_PROFILES_ACTIVE
+            value: green
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: slowgreen
+    hint: nonpremium
+  name: slowgreen
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blueorgreen
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: blueorgreen
+        hint: nonpremium
+    spec:
+      containers:
+      - image: blueorgreen:0.0.1-SNAPSHOT
+        name: blueorgreen
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "2000m"
+          requests:
+            memory: "512Mi"
+            cpu: "200m"
+        env:
+          - name: SERVER_PORT
+            value: '8080'
+          - name: SPRING_PROFILES_ACTIVE
+            value: slowgreen
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: yellow
+    hint: premium
+  name: yellow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blueorgreen
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: blueorgreen
+        hint: premium
+    spec:
+      containers:
+      - image: blueorgreen:0.0.1-SNAPSHOT
+        name: blueorgreen
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "2000m"
+          requests:
+            memory: "512Mi"
+            cpu: "200m"
+        env:
+          - name: SERVER_PORT
+            value: '8080'
+          - name: SPRING_PROFILES_ACTIVE
+            value: yellow
+status: {}
